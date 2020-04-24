@@ -3,6 +3,9 @@
     <div class="row">
       <div class="col-md-12 text-center">
         <h1>Dashboard Page</h1>
+        {{userData.email}}
+        <button v-on:click="logout" class="btn btn-info">Logout</button>
+        <router-link class="btn btn-primary ml-2" to="/">Home</router-link>
       </div>
     </div>
 
@@ -47,12 +50,39 @@ export default {
   },
   data:()=>({
     resData:[],
-    loader:true
+    loader:true,
+    userData:{}
   }),
   mounted(){
+    // this.checkUserState()
     this.showData()
+    this.getUserDetails()
   },
   methods:{
+    // checkUserState(){
+    //   firebase.auth.onAuthStateChanged(user=>{
+    //     console.log(user)
+    //     if(user){
+    //       console.log(user)
+    //     }else{
+    //       this.$router.replace('login')
+    //     }
+    //   })
+    // },
+    logout(){
+      firebase.auth.signOut().then(res=>{
+        console.log(res)
+        this.$router.replace('login')
+      }).catch(e=>{
+        console.log(e)
+      })
+    },
+    getUserDetails(){
+      let user = firebase.auth.currentUser
+      if(user){
+        this.userData = user
+      }
+    },
     deleteData(id){
       if(confirm('Pakkaa!')){
         firebase.firestore.collection('msgs').doc(id).delete().then(()=>{

@@ -2,7 +2,6 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 offset-md-2 text-center">
-        <hr>
         <h1>Aapka Vichar</h1>
         <hr>
         <div class="form-group">
@@ -45,6 +44,7 @@ export default {
           console.log(e)
         })
       }else{
+        this.loading = false
         alert('Kuch to enter karo')
       }
     }
